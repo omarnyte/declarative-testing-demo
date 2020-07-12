@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import View from './View';
 import './App.css';
 
 const CELCIUS = "celcius";
@@ -10,8 +10,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      unit: "fahrenheit", 
-      weather: null 
+      unit: FAHRENHEIT,
+      weather: null
     }
   }
 
@@ -23,21 +23,57 @@ class App extends React.Component {
         this.setState({ weather: data.main })
       });
   }
-  
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      this.getForecastForCoordinates(coords.latitude, coords.longitude)
+
+  async getGeoPosition() {
+    return await new Promise((resolve, reject) => {
+      function success({ coords }) {
+        resolve(coords);
+      }
+      function error() {
+        reject();
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error);
     })
   }
 
-  convertKelvinToUnit(kelvin, unit) {
-    return Math.round(9/5 * (kelvin - 273) + 32)
+  async componentDidMount() {
+    const { latitude, longitude } = await this.getGeoPosition();
+    this.getForecastForCoordinates(latitude, longitude)
   }
+
 
   render() {
     return (
       <div className="App">
-        <h1>{this.state.weather && this.convertKelvinToUnit(this.state.weather.temp, this.state.unit)}</h1>
+        <div>
+          <input
+            checked={this.state.unit === FAHRENHEIT}
+            id={FAHRENHEIT}
+            name="unit"
+            onChange={() => this.setState({ unit: FAHRENHEIT })}
+            type="radio"
+            value={FAHRENHEIT}
+          />
+          <label htmlFor={FAHRENHEIT}>F</label>
+
+          <input
+            checked={this.state.unit === CELCIUS}
+            id={CELCIUS}
+            name="unit"
+            onChange={() => this.setState({ unit: CELCIUS })}
+            type="radio"
+            value={CELCIUS}
+          />
+          <label htmlFor={CELCIUS}>C</label>
+
+        </div>
+          {this.state.weather && 
+            <View
+              temperature={this.state.weather.temp} 
+              unit={this.state.unit}
+            />
+          }
       </div>
     );
   }
