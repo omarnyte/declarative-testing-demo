@@ -1,9 +1,7 @@
+import { CELSIUS, FAHRENHEIT } from './constants';
 import React from 'react';
 import View from './View';
 import './App.css';
-
-const CELCIUS = "celcius";
-const FAHRENHEIT = "fahrenheit";
 
 class App extends React.Component {
 
@@ -19,7 +17,6 @@ class App extends React.Component {
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         this.setState({ weather: data.main })
       });
   }
@@ -42,7 +39,6 @@ class App extends React.Component {
     this.getForecastForCoordinates(latitude, longitude)
   }
 
-
   render() {
     return (
       <div className="App">
@@ -58,14 +54,14 @@ class App extends React.Component {
           <label htmlFor={FAHRENHEIT}>F</label>
 
           <input
-            checked={this.state.unit === CELCIUS}
-            id={CELCIUS}
+            checked={this.state.unit === CELSIUS}
+            id={CELSIUS}
             name="unit"
-            onChange={() => this.setState({ unit: CELCIUS })}
+            onChange={() => this.setState({ unit: CELSIUS })}
             type="radio"
-            value={CELCIUS}
+            value={CELSIUS}
           />
-          <label htmlFor={CELCIUS}>C</label>
+          <label htmlFor={CELSIUS}>C</label>
 
         </div>
           {this.state.weather && 

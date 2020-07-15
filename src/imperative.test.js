@@ -47,13 +47,13 @@ describe('the radio inputs', () => {
     });
   })
 
-  describe('the Celcius option', () => {
+  describe('the Celsius option', () => {
     test('its onChange function updates the unit in state to celcius', () => {
       const wrapper = shallow(<App />);
-      const fahrenheitInput = wrapper.find("input[id='celcius']");
-      fahrenheitInput.prop('onChange')();
+      const celsiusInput = wrapper.find("input[id='celsius']");
+      celsiusInput.prop('onChange')();
 
-      expect(wrapper.state('unit')).toEqual('celcius')
+      expect(wrapper.state('unit')).toEqual('celsius')
     });
   })
 })
