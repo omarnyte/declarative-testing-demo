@@ -42,6 +42,7 @@ describe('the weather application', () => {
   });
 
   test('clicking the Fahrenheit option displays the weather in Fahrenheit', async () => {
+    // fetchMock configured in beforeEach
     const wrapper = mount(<App />);
 
     const fahrenheitInput = getInputByLabelText(wrapper, 'F');
@@ -56,6 +57,7 @@ describe('the weather application', () => {
   });
 
   test('clicking the Celcius option displays the weather in Celcius', async () => {
+    // fetchMock configured in beforeEach
     const wrapper = mount(<App />);
 
     const celciusInput = getInputByLabelText(wrapper, 'C');
