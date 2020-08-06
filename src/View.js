@@ -1,5 +1,6 @@
 import { CELSIUS, FAHRENHEIT } from './constants';
 import React from 'react';
+import './View.css';
 
 function View ({ temperature, unit }) {
   const convertKelvinToUnit = (kelvin, unit) => {
